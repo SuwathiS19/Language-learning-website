@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url(back.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color:rgba(5, 39, 78, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #e7dede;
+        }
+
+        .input-wrapper {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #response {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Voice Assistant</h1>
+        <div class="input-wrapper">
+            <input type="text" id="userInput" placeholder="Ask me something...">
+            <button id="speakBtn">speak</button>
+        </div>
+        <div id="response"></div>
+        
+        
+    </div>
+   
+    <script>
+        // Function to generate bot response based on user input
+        function generateBotResponse(userInput) {
+            // Convert user input to lowercase for easier comparison
+            userInput = userInput.toLowerCase();
+
+            // Define bot responses for different user inputs
+        const responses = {
+            'hi': 'hi how can i help you',
+            'hello': 'Hi there!',
+            'how are you': 'I am just a bot, but thanks for asking!',
+            'what is your name': 'I am FV.',
+            'bye': 'Bye! Have a great day!',
+            'what time is it': new Date().toLocaleTimeString(),
+            'time':new Date().toLocaleTimeString(),
+            'what is the weather like': 'I\'m sorry, I don\'t have access to weather information.',
+            'suggest some tamil questions': {
+            'spanish': '¿Cómo se dice "hello" en español?',
+            'tamil': 'வணக்கம் என்றால் என்ன?',
+        // Add more language-specific questions as needed
+    }
+    // Add more responses as needed
+};
+
+
+            // Check if the user input matches any predefined responses
+            if (responses.hasOwnProperty(userInput)) {
+                return responses[userInput];
+            } else {
+                return 'Sorry, I didn\'t understand that.';
+            }
+        }
+
+        // Event listener for the "Speak" button click
+        document.getElementById("speakBtn").addEventListener("click", function() {
+            var userInput = document.getElementById("userInput").value;
+            document.getElementById("response").innerText = "You asked: " + userInput;
+            
+            // Get bot response based on user input
+            var responseText = generateBotResponse(userInput);
+            
+            // Display bot response
+            document.getElementById("response").innerText = "Bot: " + responseText;
+        });
+    </script>
+</body>
+</html>

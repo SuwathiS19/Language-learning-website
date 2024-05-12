@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="logo1.png" type="image/x-icon">
+<title>Features</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('back.jpg'); /* Replace 'back.jpg' with the path to your image */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color:rgba(5, 39, 78, 0.7); /* Adjust the alpha value as needed */
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(36, 205, 36, 0.1);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+  }
+
+  h1 {
+    text-align: center;
+    color: #e4d7d7;
+  }
+
+  .button-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  button {
+    display: inline-block;
+    background-color: #3c84cc;
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    margin-right: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  button:hover {
+    background-color: #081108;
+  }
+
+  #textInput {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  #voiceInput {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1></h1>
+
+  <div class="button-container">
+    <button onclick="startVoiceToText()">Voice to Text</button>
+  </div>
+
+  <div class="button-container">
+    <button onclick="startTextToVoice()">Text to Voice</button>
+  </div>
+  <textarea id="textInput" rows="4" placeholder="Enter text here"></textarea>
+  <textarea id="voiceInput" rows="4" placeholder="Transcribed text will appear here"></textarea>
+</div>
+
+<script>
+  function startVoiceToText() {
+    let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+    recognition.lang = '*';
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = function(event) {
+      let result = event.results[event.results.length - 1][0].transcript;
+      document.getElementById('voiceInput').value = result;
+    };
+
+    recognition.onerror = function(event) {
+      console.error('Speech recognition error detected: ' + event.error);
+    };
+
+    recognition.start();
+  }
+
+  function startTextToVoice() {
+    let text = prompt("Enter the text you want to convert to speech:");
+    
+    if (text !== null && text.trim() !== "") {
+        document.getElementById('textInput').value = text;
+        
+        let utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "*"; // Use wildcard to support all languages
+        window.speechSynthesis.speak(utterance);
+    } else {
+        alert('Please enter some text.');
+    }
+}
+
+</script>
+
+</body>
+</html>
